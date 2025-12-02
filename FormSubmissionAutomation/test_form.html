@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Test Form</title>
+</head>
+
+<body>
+    <h2>Job Application - Test Form</h2>
+    <form id="jobForm" action="/submitted" method="post" enctype="multipart/form-data">
+        <label>Full name: <input id="name" name="name" type="text"></label><br><br>
+        <label>Email: <input id="email" name="email" type="email"></label><br><br>
+        <label>Phone: <input id="phone" name="phone" type="tel"></label><br><br>
+
+        <label>Position:
+            <select id="position" name="position">
+                <option value="">-- Select --</option>
+                <option value="dev">Developer</option>
+                <option value="qa">QA Engineer</option>
+                <option value="pm">Project Manager</option>
+            </select>
+        </label><br><br>
+
+        <label>Experience:
+            <input type="radio" name="exp" value="junior" id="exp_junior">Junior
+            <input type="radio" name="exp" value="mid" id="exp_mid">Mid
+            <input type="radio" name="exp" value="senior" id="exp_senior">Senior
+        </label><br><br>
+
+        <label><input id="relocate" name="relocate" type="checkbox"> Willing to relocate</label><br><br>
+
+        <label>Resume (file):
+            <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx">
+        </label><br><br>
+
+        <label>Cover letter:
+            <textarea id="cover" name="cover" rows="4" cols="40"></textarea>
+        </label><br><br>
+
+        <button id="submitBtn" type="submit">Submit Application</button>
+    </form>
+
+    <script>
+        // For testing only: intercept form submission so page doesn't navigate away
+        document.getElementById('jobForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            const obj = {};
+            data.forEach((v, k) => {
+                if (v instanceof File) obj[k] = v.name;
+                else obj[k] = v;
+            });
+            document.body.innerHTML = '<h3>Form submitted (test)</h3><pre>' + JSON.stringify(obj, null, 2) + '</pre>';
+        });
+    </script>
+</body>
+
+</html>
